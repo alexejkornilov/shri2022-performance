@@ -1,6 +1,4 @@
-require('./reset.css')
-require('./styles.css')
-
+(() => {
     function bind(nodes, event, handler) {
         Array.from(nodes).forEach(node => {
             node.addEventListener(event, handler);
@@ -84,16 +82,18 @@ require('./styles.css')
     function makeMenu(node) {
         let expanded = false;
         const links = document.querySelector('.header__links');
+
         node.addEventListener('click', () => {
             expanded = !expanded;
             node.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+            node.querySelector('.header__menu-text').textContent = expanded ? 'Закрыть меню' : 'Открыть меню';
             links.classList.toggle('header__links_opened', expanded);
             links.classList.add('header__links-toggled');
         });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        makeTabs(document.querySelector('.main__devices'))
-        makeMenu(document.querySelector('.header__menu'))
+        Array.from(document.querySelectorAll('.main__devices')).forEach(makeTabs);
+        Array.from(document.querySelectorAll('.header__menu')).forEach(makeMenu);
     });
-
+})();
