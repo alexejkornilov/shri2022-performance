@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PurgeCSSPlugin = require("purgecss-webpack-plugin");
+const glob = require("glob");
 
 module.exports = {
     mode: "production",
@@ -26,7 +28,9 @@ module.exports = {
         new MiniCssExtractPlugin({
             linkType: "text/css",
         }),
-
+        new PurgeCSSPlugin({
+            paths: glob.sync(`${path.join(__dirname, 'docs')}/**/*`,  { nodir: true }),
+        }),
     ],
 
 };
